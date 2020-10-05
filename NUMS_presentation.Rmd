@@ -1,0 +1,116 @@
+---
+title: "HLMdiag!"
+author: "Jaylin Lowe and Jack Moran"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "hygge"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(bookdown)
+library(gridExtra)
+library(dplyr)
+```
+
+
+# Motivation
+
+.Large[
+Branching Process - Survival of a population.
+]
+
+
+--
+
+- After $n$ generations, what is the probability that a virus has become extinct?
+   
+- If it is not extinct, what is the expected number of cases in generation $n$?
+
+
+---
+
+# Motivation
+
+.Large[
+Poisson Process - Arrival of events.
+]
+
+--
+
+- In the first two days, what is the expected number of new cases caused by the individual?
+   
+- Given this number of new cases, how many people infected were over the age of 65?
+
+---
+
+# Outline
+
+.Large[
+1. Discrete Time Branching Processes
+
+2. Probability Generating Functions
+
+3. Continuous Time Poisson Procceses
+
+4. Extensions of Poisson Processes
+
+5. Conclusion
+]
+
+---
+
+class: middle, inverse
+
+# Branching Processes
+
+---
+
+# Terminology
+
+Assume that each individual in a population produces a random number of offspring according to the **offspring distribution**, $a$, with 
+
+$$a = \{a_1, a_2, ... \}$$
+i.e. each individual independently has $k$ offspring with probability $a_k$.
+
+$\\$
+
+Let $Z_n$ be the size of the $n$th generation. Then, $Z_0, Z_1, ...$ is a **branching process**. 
+
+*talk about examples and connection to Markov Chains*
+
+---
+
+# Assumptions
+
+- $Z_0 = 1$
+
+- $a_0 < 1$
+
+- $a_0 + a_1 <1$
+   
+
+
+.small[*talk about big questions for branching processes*]
+
+---
+
+# Long-term Behavior
+
+.content-box-yellow[
+.Large[
+**Theorem 1**
+
+All non-zero states are transient. As $n\to\infty$, a branching process either becomes extinct or grows without bound.
+]
+]
+
+---
+
+# Proof
