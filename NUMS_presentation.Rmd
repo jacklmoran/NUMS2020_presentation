@@ -19,98 +19,156 @@ library(gridExtra)
 library(dplyr)
 ```
 
+#What is HLMdiag?
 
-# Motivation
+Give the schpiel here, transition into what is a hierarchical model
 
-.Large[
-Branching Process - Survival of a population.
-]
-
-
---
-
-- After $n$ generations, what is the probability that a virus has become extinct?
-   
-- If it is not extinct, what is the expected number of cases in generation $n$?
-
+We could maybe do a roadmap if you think that is easier!
 
 ---
 
-# Motivation
+# Correlated data
 
-.Large[
-Poisson Process - Arrival of events.
+In multiple regression, we assume that all observations are independent of one another.
+
+This is not always the case.
+
+.pull-left[
+```{r echo=FALSE}
+knitr::include_graphics("figs/RatpupCluster.png")
+```
 ]
 
---
+.pull-right[
+```{r echo=FALSE}
+knitr::include_graphics("figs/ToothCluster.png")
+```
 
-- In the first two days, what is the expected number of new cases caused by the individual?
-   
-- Given this number of new cases, how many people infected were over the age of 65?
+]
 
 ---
 
-# Outline
+# Hierarchical Structure
 
-.Large[
-1. Discrete Time Branching Processes
-
-2. Probability Generating Functions
-
-3. Continuous Time Poisson Procceses
-
-4. Extensions of Poisson Processes
-
-5. Conclusion
+.center[
+Clustered Data
 ]
+
+ | Two-level | Three-level
+----|-----------|------------
+Cluster of Clusters | | School
+Cluster of Observations | Litter | Classroom
+Observation | Pup | Student
+
+<br>
+
+Litter and school are the primary sampling units
+
+Rat pups and students are elements
+
+---
+
+# Levels of data
+
+.center[
+Clustered Data
+]
+
+ | Two-level | Three-level
+-|-----------|-------------
+Level 3 | |School
+Level 2 | Litter | Classroom
+Level 1 | Rat pup | Student
+
+<br>
+
+$Y_{i1}, Y_{i2}, . . . , Y_{is}$: Litter $i$, the weights of pups 1, 2, . . . , $s$.
+
+$Y_{ij1}, Y_{ij2}, . . . , Y_{ijs}$: school $i$, classroom $j$, test scores of students
+1, 2, . . . , $s$.
+
+---
+
+# Sources of Variability
+
+.large[School Example]
+
+**Variability between schools** $(\sigma^2_b)$
+
+**Size of school:** Do smaller schools give more attention per student?
+
+**Type of school:** Do Catholic schools teach differently or attract different students?
+
+<br>
+
+**Variability within schools** $(\sigma^2)$
+
+**Gender:** Are there differences between boys and girls?
+
+**Socio-ecinomic status**
+
+---
+
+# Random Intercept Model Formulation
+
+For data with $n$ groups (schools) and $m_i$ observations per group (students),
+
+**Composite Formulation:**
+
+$Y_{i,j} = \alpha + w_i + \beta X_{i,j} + \epsilon_{i,j}$, 
+
+for $i = 1, 2, ... , n, j = 1, 2, ..., m_i$
+
+where $w_i ∼ N(0, \sigma^2_b)$ and $\epsilon_{i,j} ∼ N(0, \sigma^2)$.
+
+<br>
+
+**Hierarchical Formulation:**
+
+**Level 1:** (variability within each school)
+
+$Y_{i,j} = a_i + \beta X_j + \epsilon_{i,j}$ , where $i = 1, 2, . . . , n$, $j = 1, 2, ..., m_i$.
+
+**Level 2:** (variability between students within school)
+
+$a_i = \alpha + w_i$, where $w_i ∼ N(0, \sigma^2_b)$.
+
+---
+
+# Random Slope Model Formulation
+
+**Hierarchical Formulation:**
+
+**Level 1:**
+
+$Y_{i,j} = a_i + b_iX_{i,j} + \epsilon_{i,j}$ , 
+
+where $\epsilon_{i,j} ∼ N(0, \sigma^2)$.
+
+**Level 2:** 
+
+$a_i = \alpha + w_i$
+
+$b_i = \beta + v_i$, where
+
+$$
+\begin{bmatrix}
+u_i \\ v_i  \end{bmatrix} \sim \text{MVNorm}(\begin{bmatrix}
+0 \\ 0  \end{bmatrix}, \Sigma), \Sigma = \begin{bmatrix}
+\sigma_1^2 & \rho\sigma_1\sigma_2 \\
+\rho\sigma_1\sigma_2 & \sigma_2^2 
+\end{bmatrix}
+$$
 
 ---
 
 class: middle, inverse
 
-# Branching Processes
-
----
-
-# Terminology
-
-Assume that each individual in a population produces a random number of offspring according to the **offspring distribution**, $a$, with 
-
-$$a = \{a_1, a_2, ... \}$$
-i.e. each individual independently has $k$ offspring with probability $a_k$.
-
-$\\$
-
-Let $Z_n$ be the size of the $n$th generation. Then, $Z_0, Z_1, ...$ is a **branching process**. 
-
-*talk about examples and connection to Markov Chains*
-
----
-
-# Assumptions
-
-- $Z_0 = 1$
-
-- $a_0 < 1$
-
-- $a_0 + a_1 <1$
-   
+# Diagnostics
 
 
-.small[*talk about big questions for branching processes*]
 
----
 
-# Long-term Behavior
 
-.content-box-yellow[
-.Large[
-**Theorem 1**
 
-All non-zero states are transient. As $n\to\infty$, a branching process either becomes extinct or grows without bound.
-]
-]
 
----
-
-# Proof
