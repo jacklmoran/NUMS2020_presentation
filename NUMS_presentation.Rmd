@@ -171,6 +171,7 @@ class: middle, inverse
 ---
 
 # Residuals
+<<<<<<< HEAD
 
 .large[
 **Hilden-Minton (1995)** defines three types of residuals:
@@ -258,4 +259,5 @@ class: middle, inverse
 # Classroom Data
 
 We will use the classroom data set
+
 
