@@ -62,7 +62,7 @@ Observation | Pup | Student
 
 Litter and school are the primary sampling units
 
-Rat pups and students are elements
+Pups and students are elements
 
 ---
 
@@ -93,17 +93,19 @@ Level 1 | Rat pup | Student
 
 **Variability between schools** `\((\sigma^2_b)\)`
 
-**Size of school:** Do smaller schools give more attention per student?
+Type of school 
 
-**Type of school:** Do Catholic schools teach differently or attract different students?
+Median household income
 
 &lt;br&gt;
 
 **Variability within schools** `\((\sigma^2)\)`
 
-**Gender:** Are there differences between boys and girls?
+Gender
 
-**Socio-ecinomic status**
+Minority
+
+Socio-ecinomic status
 
 ---
 
@@ -163,6 +165,91 @@ $$
 class: middle, inverse
 
 # Diagnostics
+
+---
+
+# Residuals
+
+.large[
+**Hilden-Minton (1995)** defines three types of residuals:
+
+   1. level-1 (conditional) residuals
+$$
+\epsilon_i = y_i - X_i\beta - Z_ib_i
+$$
+
+   2. higher-level (random effects) residuals
+$$
+Z_ib_i
+$$
+
+   3. marginal (composite) residuals
+$$
+\zeta_i = y_i - x_i\beta = Z_ib_i  + \epsilon_i
+$$
+
+Additionally, residual values change depending on how the fixed and random model coefficients are estimated.
+]
+
+---
+
+# Level-1 Residuals
+
+The level-1 residuals, `\(\epsilon_i = y_i - X_i\beta - Z_ib_i\)`, change depending on how `\(\beta\)` and `\(b_i\)` are estimated.
+
+1. **Least Squares** (LS)
+
+   - Fit seperate linear model to each group, use LS to estimate `\(\beta\)` and `\(b_i\)`
+   
+   - Unconfounded with higher level residuals 
+   
+   - Unreliable for low sample sizes
+   
+2. **Empirical Bayes** (EB)
+
+   - Conditional modes of the `\(b_i\)`s given the data and the estimated parameter values (found by maximum likelihood or restricted maximum likelihood)
+   
+   - Interrelated with higher level residuals
+   
+   - More robust at small sample sizes
+   
+---
+
+# Higher-level Residuals
+
+.large[
+More commonly referred to as the random effects, `\(Z_ib_i\)`.
+
+   - Again changes depending on method of estimation
+
+   - Sample sizes are often small at higher levels, and interrelation is no longer an issue
+   
+   - Empirical Bayes estimation almost always prefered
+]
+
+---
+
+# Marginal Residuals
+
+.large[
+Obtained by plugging in the estimate of `\(\beta\)`, `\(\hat{\beta}\)`, into the definition, `\(\zeta_i = y_i - x_i\beta\)`.
+
+   - The sum of the level-1 and higher-level residuals
+   
+   - Problems in marginal residuals must be assessed through level-1 or higher-level
+   
+   - Marginal residuals, `\(\zeta_i\)`, and observed values, `\(y_i\)`, have the same covariance structure
+]
+
+---
+
+# Influence
+
+---
+
+class: middle, inverse
+
+# HLMdiag example and updates
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
