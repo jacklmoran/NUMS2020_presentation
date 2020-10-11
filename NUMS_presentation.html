@@ -25,8 +25,20 @@ class: center, middle, inverse, title-slide
 
 Give the schpiel here, transition into what is a hierarchical model
 
-We could maybe do a roadmap if you think that is easier!
+We could maybe do a roadmap if you think that is easier! (I've changed these to reflect one way to do this, let me know what you think)
 
+- A R package! 
+
+- `HLMdiag` calculates diagnostics for hierarchical linear models (HLMs)
+
+- What we will cover in this talk: 
+
+  - Hierarchical linear models and when they are used 
+  
+  - Basic residual and influence analysis for HLMs
+  
+  - An example of how to use HLMdiag in practice 
+  
 ---
 
 # Correlated data
@@ -105,7 +117,7 @@ Gender
 
 Minority
 
-Socio-ecinomic status
+Socio-economic status
 
 ---
 
@@ -243,13 +255,49 @@ Obtained by plugging in the estimate of `\(\beta\)`, `\(\hat{\beta}\)`, into the
 
 ---
 
-# Influence
+# Introduction to Influence Diagnostics
+
+Like multiple regression, it is important to identify influential observations as part of our analysis.
+
+For hierarchical linear models, we also need to consider influential groups. 
+
+Using the school example, we need to consider: 
+  - influential students (level 1)
+  
+  - influential classes (level 2)
+  
+  - influential schools (level 3)
+
+
+There are a variety diagnostics used to quantify how influential an observation or a group is.
+
+---
+# Examples of Influence Diagnostics
+
+1. **Cook's Distance**
+
+  - a measure of how much the fixed effects changed 
+  
+  - compares the fixed effects without an observation or group to the original ones 
+  
+  
+2. **Leverage** 
+
+  - a measure of how the fitted values change, rather than the model parameters 
+  
+  - defined as the rate of change in the predicted response with respect to the observed response
+  
+  - we can also calculate the leverage associated with the fixed effects, the random effects, or overall
 
 ---
 
 class: middle, inverse
 
 # HLMdiag example and updates
+
+
+
+---
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
