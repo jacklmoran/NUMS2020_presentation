@@ -298,7 +298,6 @@ class: middle, inverse
 # HLMdiag example and updates
 
 
-
 ---
 
 
