@@ -1,5 +1,6 @@
 ---
-title: "HLMdiag!"
+title: "Overhauling HLMdiag"
+subtitle: "Updating an R package to conform to the tidyverse"
 author: "Jaylin Lowe and Jack Moran"
 output:
   xaringan::moon_reader:
@@ -21,22 +22,28 @@ library(dplyr)
 
 #What is HLMdiag?
 
-Give the schpiel here, transition into what is a hierarchical model
-
-We could maybe do a roadmap if you think that is easier! (I've changed these to reflect one way to do this, let me know what you think)
-
-- A R package! 
+- An R package, created by Adam Loy in 2014
 
 - `HLMdiag` calculates diagnostics for hierarchical linear models (HLMs)
 
 - What we will cover in this talk: 
 
-  - Hierarchical linear models and when they are used 
+  - Correlated data and hierarchical linear models
   
   - Basic residual and influence analysis for HLMs
   
-  - An example of how to use HLMdiag in practice 
+  - An example of how to use `HLMdiag` in practice 
   
+```{r echo=FALSE, out.width = "25%", fig.align = 'center'}
+knitr::include_graphics("figs/HLMdiag_hex.png")
+```
+  
+---
+
+class: middle, inverse
+
+#Correlated Data and HLMs
+
 ---
 
 # Correlated data
@@ -67,26 +74,6 @@ Clustered Data
 ]
 
  | Two-level | Three-level
-----|-----------|------------
-Cluster of Clusters | | School
-Cluster of Observations | Litter | Classroom
-Observation | Pup | Student
-
-<br>
-
-Litter and school are the primary sampling units
-
-Pups and students are elements
-
----
-
-# Levels of data
-
-.center[
-Clustered Data
-]
-
- | Two-level | Three-level
 -|-----------|-------------
 Level 3 | |School
 Level 2 | Litter | Classroom
@@ -102,7 +89,7 @@ $Y_{ij1}, Y_{ij2}, . . . , Y_{ijs}$: school $i$, classroom $j$, test scores of s
 ---
 
 # Sources of Variability
-
+.pull-left[
 .large[School Example]
 
 **Variability between schools** $(\sigma^2_b)$
@@ -120,6 +107,13 @@ Gender
 Minority
 
 Socio-economic status
+]
+
+.pull-right[
+```{r echo=FALSE}
+knitr::include_graphics("figs/SchoolCluster.png")
+```
+]
 
 ---
 
@@ -297,7 +291,33 @@ class: middle, inverse
 
 # HLMdiag example and updates
 
+---
+
+#Updates
+
+.large[
+- `hlm_resid()`, `hlm_influence()`, and `hlm_augment()`
+
+- conforms to tidyverse
+
+- respects `na.action`
+
+- implements `nlme`
+
+- general efficiency
+]
 
 ---
 
+class: middle, inverse
+
+.center[
+.large[
+**Special thanks to:**
+
+Adam Loy
+
+Laura Chihara
+]
+]
 

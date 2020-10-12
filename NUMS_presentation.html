@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>HLMdiag!</title>
+    <title>Overhauling HLMdiag</title>
     <meta charset="utf-8" />
     <meta name="author" content="Jaylin Lowe and Jack Moran" />
     <link href="libs/remark-css/default.css" rel="stylesheet" />
@@ -12,7 +12,8 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# HLMdiag!
+# Overhauling HLMdiag
+## Updating an R package to conform to the tidyverse
 ### Jaylin Lowe and Jack Moran
 
 ---
@@ -23,22 +24,26 @@ class: center, middle, inverse, title-slide
 
 #What is HLMdiag?
 
-Give the schpiel here, transition into what is a hierarchical model
-
-We could maybe do a roadmap if you think that is easier! (I've changed these to reflect one way to do this, let me know what you think)
-
-- A R package! 
+- An R package, created by Adam Loy in 2014
 
 - `HLMdiag` calculates diagnostics for hierarchical linear models (HLMs)
 
 - What we will cover in this talk: 
 
-  - Hierarchical linear models and when they are used 
+  - Correlated data and hierarchical linear models
   
   - Basic residual and influence analysis for HLMs
   
-  - An example of how to use HLMdiag in practice 
+  - An example of how to use `HLMdiag` in practice 
   
+&lt;img src="figs/HLMdiag_hex.png" width="25%" style="display: block; margin: auto;" /&gt;
+  
+---
+
+class: middle, inverse
+
+#Correlated Data and HLMs
+
 ---
 
 # Correlated data
@@ -65,26 +70,6 @@ Clustered Data
 ]
 
  | Two-level | Three-level
-----|-----------|------------
-Cluster of Clusters | | School
-Cluster of Observations | Litter | Classroom
-Observation | Pup | Student
-
-&lt;br&gt;
-
-Litter and school are the primary sampling units
-
-Pups and students are elements
-
----
-
-# Levels of data
-
-.center[
-Clustered Data
-]
-
- | Two-level | Three-level
 -|-----------|-------------
 Level 3 | |School
 Level 2 | Litter | Classroom
@@ -100,7 +85,7 @@ Level 1 | Rat pup | Student
 ---
 
 # Sources of Variability
-
+.pull-left[
 .large[School Example]
 
 **Variability between schools** `\((\sigma^2_b)\)`
@@ -118,6 +103,11 @@ Gender
 Minority
 
 Socio-economic status
+]
+
+.pull-right[
+![](figs/SchoolCluster.png)&lt;!-- --&gt;
+]
 
 ---
 
@@ -295,8 +285,35 @@ class: middle, inverse
 
 # HLMdiag example and updates
 
+---
+
+#Updates
+
+.large[
+- `hlm_resid()`, `hlm_influence()`, and `hlm_augment()`
+
+- conforms to tidyverse
+
+- respects `na.action`
+
+- implements `nlme`
+
+- general efficiency
+]
 
 ---
+
+class: middle, inverse
+
+.center[
+.large[
+**Special thanks to:**
+
+Adam Loy
+
+Laura Chihara
+]
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
