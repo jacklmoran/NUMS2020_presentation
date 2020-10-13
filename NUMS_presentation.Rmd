@@ -97,7 +97,7 @@ knitr::include_graphics("figs/SchoolCluster.png")
 
 # Hierarchical Linear Model Formulation
 
-For data with $n$ groups (schools) and $m_i$ observations per group (students),
+For data with no level-2 variables,
 
 **Hierarchical Formulation:**
 
@@ -105,13 +105,13 @@ For data with $n$ groups (schools) and $m_i$ observations per group (students),
 
 $Y_{i,j} = a_i + b_iX_{ij} + \epsilon_{ij}$ , 
 
-where $\epsilon_{i,j} ∼ N(0, \sigma^2)$.
+where $\epsilon_{ij} ∼ N(0, \sigma^2)$.
 
 **Level 2:** 
 
-$a_i = \alpha_0 + \gamma_iZ_i+  u_i$
+$a_i = \alpha + u_i$
 
-$b_i = \beta_0 + \delta_iZ_i + v_i$, where
+$b_i = \beta + v_i$, where
 
 $$
 \begin{bmatrix}
@@ -137,15 +137,15 @@ Three types of residuals for HLMs:
 
    1. level-1 (conditional) residuals
 .center[
-$\epsilon_i = y_i - X_{ij} \beta - Z_ib_i$
+$\epsilon_i = y_i - X_{ij} \beta - Z_i\gamma_i$
 ]
    2. higher-level (random effects) residuals
 .center[
-$Z_ib_i$
+$Z_i\gamma_i$
 ]
    3. marginal (composite) residuals
 .center[
-$\zeta_i = y_i - X_{ij} \beta = Z_ib_i  + \epsilon_i$
+$\zeta_i = y_i - X_{ij} \beta = Z_i\gamma_i  + \epsilon_i$
 ]
 
 Additionally, residual values change depending on how coefficients are estimated.
@@ -156,11 +156,11 @@ Additionally, residual values change depending on how coefficients are estimated
 
 # Level-1 Residuals
 
-The level-1 residuals: $\epsilon_i = y_i - X_{ij} \beta - Z_ib_i$
+The level-1 residuals: $\epsilon_i = y_i - X_{ij} \beta - Z_i\gamma_i$
 
 1. **Least Squares** (LS)
 
-   - Fit seperate linear model to each group, use LS to estimate $\beta$ and $b_i$
+   - Fit seperate linear model to each group, use LS to estimate $\beta$ and $\gamma_i$
    
    - Unconfounded with higher-level residuals 
    
@@ -168,7 +168,7 @@ The level-1 residuals: $\epsilon_i = y_i - X_{ij} \beta - Z_ib_i$
    
 2. **Empirical Bayes** (EB)
 
-   - Conditional modes of the $b_i$s given the data and the estimated parameter values
+   - Conditional modes of the $\gamma_i$s given the data and the estimated parameter values
    
    - Interrelated with higher-level residuals
    
@@ -179,7 +179,7 @@ The level-1 residuals: $\epsilon_i = y_i - X_{ij} \beta - Z_ib_i$
 # Higher-level Residuals
 
 .large[
-Also known as random effects: $Z_ib_i$.
+Also known as random effects: $Z_i\gamma_i$.
 
    - Depends on method of estimation
    

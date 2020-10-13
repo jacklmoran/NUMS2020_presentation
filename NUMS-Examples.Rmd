@@ -1,0 +1,89 @@
+---
+title: "NUMS Examples"
+author: "Jaylin Lowe and Jack Moran"
+date: "10/11/2020"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+```
+
+We will use the classroom dataset (West et. al, 2014). 
+```{r}
+data("classroom", package = "WWGbook")
+```
+
+We will fit a simple three-level hierarchical linear model using the `lme4` package: 
+```{r}
+class.lmer <- lme4::lmer(mathgain ~ mathkind + sex + minority + ses + housepov + (1|schoolid/classid), data = classroom)
+summary(class.lmer)
+```
+
+##Residual Analysis
+
+We use the new function, `hlm_resid`, to calculate level-1 residuals for the classroom model.
+```{r}
+(resid_1 <- hlm_resid(class.lmer, 
+                      level = 1, 
+                      standardize = FALSE))
+```
+
+Note that warning that sample size for LS residuals is insufficient, so we have to use EB level-1 residuals. We plot the residuals versus explanatory variables or fitted value.
+```{r}
+ggplot(data = resid_1, aes(x = mathkind, y = .resid)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm")
+```
+
+We continue with level-2 residuals:
+```{r}
+(resid_2 <- hlm_resid(class.lmer, 
+                      level = "classid:schoolid", 
+                      standardize = FALSE, 
+                      include.ls = FALSE))
+
+ggplot(data = resid_2, aes(x = classid, y = .ranef.intercept)) + 
+  geom_point() + 
+  geom_smooth(se = FALSE, method = "lm")
+```
+
+And level-3 residuals:
+```{r}
+(resid_3 <- hlm_resid(class.lmer, 
+                      level = "schoolid", 
+                      standardize = FALSE,
+                      include.ls = FALSE))
+```
+
+##Influence Analysis 
+
+Using the new function `hlm_influence`, we can calculate influence diagnostics for every student in the dataset: 
+```{r}
+(infl <- hlm_influence(class.lmer, level = 1, leverage = "overall"))
+```
+
+```{r}
+dotplot_diag(infl$cooksd, name = "cooks.distance", cutoff = "internal")
+```
+
+Since this is a hierarchical model, we can also do this at the second level (classes), or the third (schools):
+```{r}
+#second level 
+(infl2 <- hlm_influence(class.lmer, level = "classid:schoolid", cutoff = "internal"))
+dotplot_diag(infl2$cooksd, name = "cooks.distance", cutoff = "internal")
+
+#third level 
+(infl3 <- hlm_influence(class.lmer, level = "schoolid", cutoff = "internal"))
+dotplot_diag(infl3$cooksd, name = "cooks.distance", cutoff = "internal")
+```
+
+We can also use the function `hlm_augment` to return both influence diagnostics and residuals. 
+```{r}
+aug <- hlm_augment(class.lmer, level = 1)
+print(aug, width = Inf)
+```
+
