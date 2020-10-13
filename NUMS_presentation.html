@@ -99,15 +99,15 @@ For data with `\(n\)` groups (schools) and `\(m_i\)` observations per group (stu
 
 **Level 1:**
 
-`\(Y_{i,j} = a_i + b_iX_{i,j} + \epsilon_{i,j}\)` , 
+`\(Y_{i,j} = a_i + b_iX_{ij} + \epsilon_{ij}\)` , 
 
 where `\(\epsilon_{i,j} ∼ N(0, \sigma^2)\)`.
 
 **Level 2:** 
 
-`\(a_i = \alpha + u_i\)`
+`\(a_i = \alpha_0 + \gamma_iZ_i+  u_i\)`
 
-`\(b_i = \beta + v_i\)`, where
+`\(b_i = \beta_0 + \delta_iZ_i + v_i\)`, where
 
 $$
 `\begin{bmatrix}
@@ -132,28 +132,27 @@ class: middle, inverse
 Three types of residuals for HLMs:
 
    1. level-1 (conditional) residuals
-$$
-\epsilon_i = y_i - X_i\beta - Z_ib_i
-$$
-
+.center[
+`\(\epsilon_i = y_i - X_{ij} \beta - Z_ib_i\)`
+]
    2. higher-level (random effects) residuals
-$$
-Z_ib_i
-$$
-
+.center[
+`\(Z_ib_i\)`
+]
    3. marginal (composite) residuals
-$$
-\zeta_i = y_i - x_i\beta = Z_ib_i  + \epsilon_i
-$$
+.center[
+`\(\zeta_i = y_i - X_{ij} \beta = Z_ib_i  + \epsilon_i\)`
+]
 
 Additionally, residual values change depending on how `\(\beta\)` and `\(b_i\)` are estimated.
+
 ]
 
 ---
 
 # Level-1 Residuals
 
-The level-1 residuals: `\(\epsilon_i = y_i - X_i\beta - Z_ib_i\)`
+The level-1 residuals: `\(\epsilon_i = y_i - X_{ij} \beta - Z_ib_i\)`
 
 1. **Least Squares** (LS)
 
@@ -245,7 +244,7 @@ class: middle, inverse
 
 ---
 
-class: middle
+class: middle, inverse
 
 # Example in R
 
