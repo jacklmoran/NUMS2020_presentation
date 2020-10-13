@@ -52,6 +52,9 @@ In multiple regression, we assume that all observations are independent of one a
 
 This is not always the case.
 
+```{r echo=FALSE, out.width= "80%", fig.align='center'}
+knitr::include_graphics("figs/CarletonCluster.png")
+```
 
 ---
 
@@ -77,31 +80,18 @@ $Y_{ij1}, Y_{ij2}, . . . , Y_{ijs}$: school $i$, classroom $j$, test scores of s
 ---
 
 # Sources of Variability
-.pull-left[
-.large[School Example]
+
+.large[School Example
 
 **Variability between schools** $(\sigma^2_b)$
 
-Type of school 
-
-Median household income
-
-<br>
-
 **Variability within schools** $(\sigma^2)$
 
-Gender
-
-Minority
-
-Socio-economic status
 ]
 
-.pull-right[
-```{r echo=FALSE}
+```{r echo=FALSE, out.width= "80%", fig.align='center'}
 knitr::include_graphics("figs/SchoolCluster.png")
 ```
-]
 
 ---
 
@@ -143,7 +133,7 @@ class: middle, inverse
 # Residuals
 
 .large[
-**Hilden-Minton (1995)** defines three types of residuals:
+Three types of residuals for HLMs:
 
    1. level-1 (conditional) residuals
 $$
@@ -160,28 +150,28 @@ $$
 \zeta_i = y_i - x_i\beta = Z_ib_i  + \epsilon_i
 $$
 
-Additionally, residual values change depending on how the fixed and random model coefficients are estimated.
+Additionally, residual values change depending on how $\beta$ and $b_i$ are estimated.
 ]
 
 ---
 
 # Level-1 Residuals
 
-The level-1 residuals, $\epsilon_i = y_i - X_i\beta - Z_ib_i$, change depending on how $\beta$ and $b_i$ are estimated.
+The level-1 residuals: $\epsilon_i = y_i - X_i\beta - Z_ib_i$
 
 1. **Least Squares** (LS)
 
    - Fit seperate linear model to each group, use LS to estimate $\beta$ and $b_i$
    
-   - Unconfounded with higher level residuals 
+   - Unconfounded with higher-level residuals 
    
    - Unreliable for low sample sizes
    
 2. **Empirical Bayes** (EB)
 
-   - Conditional modes of the $b_i$s given the data and the estimated parameter values (found by maximum likelihood or restricted maximum likelihood)
+   - Conditional modes of the $b_i$s given the data and the estimated parameter values
    
-   - Interrelated with higher level residuals
+   - Interrelated with higher-level residuals
    
    - More robust at small sample sizes
    
@@ -190,27 +180,13 @@ The level-1 residuals, $\epsilon_i = y_i - X_i\beta - Z_ib_i$, change depending 
 # Higher-level Residuals
 
 .large[
-More commonly referred to as the random effects, $Z_ib_i$.
+Also known as random effects: $Z_ib_i$.
 
-   - Again changes depending on method of estimation
-
-   - Sample sizes are often small at higher levels, and interrelation is no longer an issue
+   - Depends on method of estimation
    
-   - Empirical Bayes estimation almost always prefered
-]
-
----
-
-# Marginal Residuals
-
-.large[
-Obtained by plugging in the estimate of $\beta$, $\hat{\beta}$, into the definition, $\zeta_i = y_i - x_i\beta$.
-
-   - The sum of the level-1 and higher-level residuals
+   - Small sample sizes, interrelation not an issue
    
-   - Problems in marginal residuals must be assessed through level-1 or higher-level
-   
-   - Marginal residuals, $\zeta_i$, and observed values, $y_i$, have the same covariance structure
+   - Empirical Bayes estimation prefered
 ]
 
 ---
@@ -273,6 +249,11 @@ class: middle, inverse
 
 ---
 
+class: middle, inverse
+
+# Example in R
+
+---
 class: middle, inverse
 
 .center[
